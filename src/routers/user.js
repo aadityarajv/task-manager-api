@@ -15,7 +15,7 @@ router.post('/users', async (req, res) => {
 
     try {
         await user.save();
-        sendWelcomeEmail(user.email, user.name);
+        // sendWelcomeEmail(user.email, user.name);
         const token = await user.generateAuthToken();
         res.status(201).send({ user, token });
     } catch (e) {
@@ -30,7 +30,6 @@ router.post('/users/login', async (req, res) => {
         const token = await user.generateAuthToken();
         res.status(200).send({user, token});
     } catch (e) {
-        console.log(e);
         res.status(400).send();
     }
 })
@@ -88,7 +87,6 @@ router.patch('/users/me', auth , async (req, res) => {
         await user.save();
         res.send(user);
     } catch (e) {
-        console.log(e);
         res.status(400).send();
     }
 })
@@ -98,7 +96,7 @@ router.patch('/users/me', auth , async (req, res) => {
 router.delete('/users/me', auth , async (req, res) => {
     try {
         await req.user.deleteOne();
-        sendDeletionEmail(req.user.email, req.user.name);
+        // sendDeletionEmail(req.user.email, req.user.name);
         res.send(req.user);
     } catch (e) {
         res.status(500).send();
